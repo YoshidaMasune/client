@@ -1,9 +1,30 @@
-import Head from 'next/head'
-import { Inter } from 'next/font/google'
+import Head from "next/head";
+import { Inter } from "next/font/google";
+import Layout from "@/components/layout/Layout";
+import { useEffect, useState } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
+
+import { Kanit } from "next/font/google";
+
 
 export default function Home() {
+  const [workes, setWorkes] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetch("http://localhost:4000/api/workes").then(
+          (res) => res.json()
+        );
+        setWorkes(data);
+      } catch (err) {
+        console.log(err);
+        alert("server got a error !");
+      }
+    })();
+  }, []);
+
+  console.log(workes);
   return (
     <>
       <Head>
@@ -12,9 +33,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main >
-
+      <main>
+        <Layout>
+          <div>
+            <header>
+              <article>
+                <h2>รายการนิมนต์ วันนี้</h2>
+              </article>
+            </header>
+          </div>
+        </Layout>
       </main>
     </>
-  )
+  );
 }
