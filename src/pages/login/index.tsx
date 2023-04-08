@@ -12,28 +12,32 @@ function Login({}: Props) {
   const submitForm = (e: React.FormEvent) => {
     e.preventDefault();
     let loginForm = {
-      username: usernameRef.current.value,
-      password: passwordRef.current.value,
+      "username": usernameRef.current.value,
+      "password": passwordRef.current.value,
     };
 
+    console.log(loginForm); 
     // login for get Token from server api endpoint
     (async () => {
       const endpoint = "http://localhost:4000/api/auth/login";
 
       try {
-        const loginState = await fetch(endpoint, {
+        const response = await fetch(endpoint, {
           method: "POST",
-          mode: "no-cors",
+          mode: "cors",
           cache: "no-cache",
-          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
           },
+          redirect: "follow",
           referrerPolicy: "no-referrer",
           body: JSON.stringify(loginForm),
-        })
+        });
+        
+        const token = await response.json()
+        localStorage.setItem('token', token.token)
 
-        console.log(loginState);
+        window.location.href = '/admin'
       } catch (error) {
         console.log(error);
         alert("got error on login");

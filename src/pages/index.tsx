@@ -1,15 +1,9 @@
-import Head from "next/head";
-import { Inter } from "next/font/google";
+import Head from "next/head"
 import Layout from "@/components/layout/Layout";
 import { useEffect, useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
-
-import { Kanit } from "next/font/google";
-
-
 export default function Home() {
-  const [workes, setWorkes] = useState([]);
+  const [workes, setWorkes] = useState<Array<any>>();
   useEffect(() => {
     (async () => {
       try {
@@ -23,8 +17,6 @@ export default function Home() {
       }
     })();
   }, []);
-
-  console.log(workes);
   return (
     <>
       <Head>
@@ -36,14 +28,102 @@ export default function Home() {
       <main>
         <Layout>
           <div>
-            <header>
-              <article>
-                <h2>รายการนิมนต์ วันนี้</h2>
-              </article>
-            </header>
+            <section>
+              <header>
+                <article>
+                  <h2>รายการนิมนต์ วันนี้</h2>
+                </article>
+              </header>
+            </section>
+
+            <section className="grid place-items-center">
+              <table className="table-auto w-4/5 border-slate-500">
+                <thead>
+                  <tr className="">
+                    <th className="text-start">ที่</th>
+                    <th className="text-start ">ชื่อ</th>
+                    <th className="text-start">พระ</th>
+                    <th className="text-start">เวลา</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {!workes
+                    ? null
+                    : workes.map((item, index) => {
+                        return (
+                          <Usertablerow
+                            key={index}
+                            index={index}
+                            firstName={item.user.first_name}
+                            lastName={item.user.last_name}
+                            date_time={item.date_time}
+                            monk={item.monk}
+                          />
+                        );
+                      })}
+                  {!workes
+                    ? null
+                    : workes.map((item, index) => {
+                        return (
+                          <Usertablerow
+                            key={index}
+                            index={index}
+                            firstName={item.user.first_name}
+                            lastName={item.user.last_name}
+                            date_time={item.date_time}
+                            monk={item.monk}
+                          />
+                        );
+                      })}
+                  {!workes
+                    ? null
+                    : workes.map((item, index) => {
+                        return (
+                          <Usertablerow
+                            key={index}
+                            index={index}
+                            firstName={item.user.first_name}
+                            lastName={item.user.last_name}
+                            date_time={item.date_time}
+                            monk={item.monk}
+                          />
+                        );
+                      })}
+                </tbody>
+              </table>
+            </section>
+
+            <section></section>
           </div>
         </Layout>
       </main>
     </>
   );
 }
+
+interface userTable {
+  index: number;
+  firstName: string;
+  lastName: string;
+  date_time: Date;
+  monk: number;
+}
+
+const Usertablerow = ({
+  index,
+  firstName,
+  lastName,
+  date_time,
+  monk,
+}: userTable) => {
+  return (
+    <>
+      <tr>
+        <td>{index}</td>
+        <td>{firstName}</td>
+        <td>{monk}</td>
+        <td>{new Date(date_time).getDate()}</td>
+      </tr>
+    </>
+  );
+};
