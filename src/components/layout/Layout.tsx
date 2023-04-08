@@ -16,6 +16,14 @@ type Props = {
 function Layout({ children }: Props) {
   const [toggleState, setToggle] = useState(false);
 
+  useEffect(() => {
+    if (toggleState) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [toggleState]);
+
   return (
     <div className={kanit.className}>
       <div>
@@ -27,7 +35,8 @@ function Layout({ children }: Props) {
           <section
             className={`flex-[1_1_auto] transition-transform duration-300 ease-in-out ${
               toggleState ? "translate-x-[90vw]" : ""
-            }`}>
+            }`}
+          >
             {children}
           </section>
 
